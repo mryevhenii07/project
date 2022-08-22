@@ -4,12 +4,16 @@
   "private": true,
   "homepage": "https://mryevhenii07.github.io/project",
   "dependencies": {
+    "@material-ui/core": "^4.12.4",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hook-form": "^7.34.2",
+    "react-router-dom": "^5.3.3",
     "react-scripts": "5.0.1",
+    "sass": "^1.54.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -46,5 +50,16 @@
   "lint-staged": {
     "*.{js,jsx}": "eslint --cache --fix",
     "*.{js,css,md,jsx,json,scss}": "prettier --write"
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mryevhenii07/project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mryevhenii07/project/issues"
   }
 }

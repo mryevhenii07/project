@@ -1,0 +1,23 @@
+.list {
+  display: flex;
+  .item {
+    width: 100px;
+    height: 34px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--bg-btn);
+    border-radius: 80px;
+    color: var(--main-color-text);
+    font-size: 16px;
+    line-height: 26px;
+    font-weight: 400;
+    cursor: pointer;
+  }
+  .item:hover {
+    background-color: var(--bg-btn-hover);
+  }
+  .item:first-child {
+    margin-right: 10px;
+  }
+}

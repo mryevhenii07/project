@@ -1,0 +1,108 @@
+.users {
+  margin: 140px auto;
+  max-width: 1170px;
+  min-height: 50px;
+  border: 1px solid red;
+
+  @media screen and (max-width: 768px) {
+    max-width: 768px;
+  }
+  @media screen and (max-width: 360px) {
+    max-width: 360px;
+  }
+
+  .usersMainTitle {
+    text-align: center;
+    font-size: 40px;
+    line-height: 40px;
+    font-weight: 400;
+    color: var(--main-color-text);
+  }
+  .usersList {
+    margin-top: 50px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+
+    @media screen and (max-width: 1040px) {
+      // max-width: 1040px;
+    }
+
+    @media screen and (max-width: 768px) {
+      max-width: 768px;
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media screen and (max-width: 360px) {
+      max-width: 360px;
+      grid-template-columns: repeat(1, 1fr);
+    }
+
+    .userItem {
+      padding: 20px;
+      max-width: 370px;
+      // min-height: 254px;
+      border: 1px solid red;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      background-color: var(--user-item-bg);
+
+      // @media screen and (max-width:1040px){
+
+      //    width: 282px;
+
+      // }
+      // @media screen and (max-width:768px){
+      //     width: 344px;
+
+      // }
+      // @media screen and (max-width:360px){
+      //     max-width: 328px;
+
+      // }
+
+      img {
+        margin: auto;
+      }
+      .userName,
+      .profession {
+        text-align: center;
+        font-size: 16px;
+        line-height: 26px;
+        font-weight: 400;
+        margin-top: 20px;
+      }
+
+      .userEmail,
+      .usePhone {
+        text-align: center;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 26px;
+      }
+    }
+  }
+  .wrapShowMore {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    .showMore {
+      font-family: "Nunito", sans-serif;
+      margin-top: 54px;
+      width: 120px;
+      height: 34px;
+      background-color: var(--bg-btn);
+      color: var(--main-color-text);
+      border-radius: 80px;
+      outline: none;
+      border: none;
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 26px;
+    }
+    .showMore:hover {
+      background-color: var(--bg-btn-hover);
+    }
+  }
+}
