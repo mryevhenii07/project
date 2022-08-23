@@ -64,7 +64,6 @@ const Users = () => {
         </li>
       </ul>
       <div className={s.wrapShowMore}>
-        {" "}
         <button className={s.showMore}>Show more</button>
       </div>
     </div>
