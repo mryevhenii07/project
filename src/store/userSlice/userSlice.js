@@ -6,6 +6,7 @@ const initialState = {
   phone: null,
   checkbox: null,
   token: null,
+  isLoggedIn: false,
 };
 
 const userSlice = createSlice({
@@ -18,6 +19,7 @@ const userSlice = createSlice({
       state.phone = action.payload.phone;
       state.checkbox = action.payload.checkbox;
       state.token = action.payload.token;
+      state.isLoggedIn = action.payload.isLoggedIn;
     },
     removeUser(state) {
       state.yourName = null;
@@ -25,6 +27,7 @@ const userSlice = createSlice({
       state.phone = null;
       state.checkbox = null;
       state.token = null;
+      state.isLoggedIn = false;
     },
   },
 });

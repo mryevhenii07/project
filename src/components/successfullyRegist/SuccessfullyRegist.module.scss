@@ -1,0 +1,21 @@
+.wrapBlock {
+  margin: 0 auto;
+  max-width: 1170px;
+  border: 1px solid red;
+
+  .title {
+    font-size: 40px;
+    line-height: 40px;
+    font-weight: 400;
+    text-align: center;
+  }
+  .wrapImg {
+    margin-top: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  // .img{
+  //     display: flex;
+  //     text-align: center;}
+}

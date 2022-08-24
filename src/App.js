@@ -5,6 +5,7 @@ import Main from "./components/main/Main";
 import Users from "./pages/users/Users";
 import Form from "./pages/form/Form";
 import Footer from "./components/footer/Footer";
+import SuccessfullyRegist from "./components/successfullyRegist/SuccessfullyRegist";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Users />
         </Route>
       </Switch>
+      <SuccessfullyRegist />
       <Footer />
     </div>
   );

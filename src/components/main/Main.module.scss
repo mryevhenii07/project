@@ -32,15 +32,19 @@
     }
 
     .mainBtn {
+      margin: 32px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
       background-color: var(--bg-btn);
       width: 100px;
       height: 34px;
       border-radius: 80px;
       border: none;
       outline: none;
-      margin-top: 32px;
       font-size: 16px;
       line-height: 26px;
+      font-weight: 400;
     }
     .mainBtn:hover {
       background-color: var(--bg-btn-hover);

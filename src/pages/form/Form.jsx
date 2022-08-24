@@ -1,35 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 
 import React from "react";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from "@material-ui/core/styles";
+
+import Button from "@material-ui/core/Button";
 
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-// import FormControl from '@material-ui/core/FormControl';
-// import FormLabel from '@material-ui/core/FormLabel';
+import { postApi, fetchPosition } from "../../api/Api";
+
+import { addUser } from "../../store/userSlice/userSlice";
 
 import s from "./Form.module.scss";
 
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     '& .MuiTextField-root': {
-//       margin: theme.spacing(1),
-//       width: '25ch',
-//       color: 'green',
-//     },
-//   },
-// }));
-
 const Form = () => {
-  // const [isChack, setIsChack] = useState(false);
   const [value, setValue] = useState("");
   const [data, setData] = useState("");
+  const [user, setUser] = useState("");
+  const [positions, setPositions] = useState([]);
 
-  //   const classes = useStyles();
+  // useEffect(() => {
+  //   userApi().then(setUser);
+  // }, []);
+  useEffect(() => {
+    fetchPosition().then(setPositions);
+  }, []);
+
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -40,16 +41,19 @@ const Form = () => {
 
   const handleChange = (e) => {
     setValue(e.target.value);
+    // console.log(e.target.value);
   };
 
-  console.log(value);
-  const onSubmit = (data) => {
+  const onSubmit = ({ email, phone }) => {
+    console.log({ email, phone, position_id: value });
+    // postApi({ email, phone, position_id: value });
+    dispatch(addUser({ ...data }));
     setData(data);
+    // console.log(data);
     reset();
   };
 
-  console.log(data);
-
+  // console.log(data);
   return (
     <div className={s.wrapForm}>
       <h1 className={s.formMainTitle}>Working with POST request</h1>
@@ -59,8 +63,8 @@ const Form = () => {
             className={s.formInputYourName}
             {...register("yourName", {
               required: "Required field",
-              //   minLength: { value: 3, message: 'Minimum 3 characters' },
-              maxLength: { value: 10, message: "Maximum 10 characters" },
+              minLength: { value: 2, message: "Minimum 2 characters" },
+              maxLength: { value: 60, message: "Maximum 60 characters" },
             })}
             id="outlined-text-input"
             label="Your name"
@@ -101,19 +105,25 @@ const Form = () => {
           <TextField
             className={s.formInputPhone}
             type="phone"
-            {...register("phone")}
+            {...register("phone", {
+              pattern: {
+                // value: /^[+]{0,1}380([0-9]{9}),
+                message: "Invalid email address",
+              },
+            })}
             id="outlined-phone-input"
             label="Phone"
             autoComplete="current-phone"
             variant="outlined"
           />
           <div className={s.wrapPhone}>
-            +38 (XXX)XXX-XX-XX
-            {/* {errors?.phone && <p className={s.error}>{errors?.phone?.message || 'Error!'}</p>} */}
+            {/* +38 (XXX)XXX-XX-XX */}
+            {errors?.phone && (
+              <p className={s.error}>{errors?.phone?.message || "Error!"}</p>
+            )}
           </div>
         </label>
         <p className={s.selectPosition}>Select your position</p>
-        {/* <FormControl component="fieldset"> */}
 
         <RadioGroup
           aria-label="gender"
@@ -121,42 +131,27 @@ const Form = () => {
           value={value}
           onChange={handleChange}
         >
-          <FormControlLabel
-            className={s.formRadio}
-            {...register("frontendDeveloper")}
-            value="Frontend developer"
-            control={<Radio color="primary" />}
-            label="Frontend developer"
-          />
-
-          <FormControlLabel
-            {...register("backendDeveloper")}
-            value="Backend developer"
-            control={<Radio color="primary" />}
-            label="Backend developer"
-          />
-          <FormControlLabel
-            value="Designer"
-            control={<Radio color="primary" />}
-            label="Designer"
-            {...register("designer")}
-          />
-          <FormControlLabel
-            value="QA"
-            control={<Radio color="primary" />}
-            label="QA"
-            {...register("QA")}
-          />
+          {positions.map(({ id, name }) => {
+            return (
+              <FormControlLabel
+                key={id}
+                className={s.formRadio}
+                value={name}
+                control={<Radio color="primary" />}
+                label={name}
+              />
+            );
+          })}
         </RadioGroup>
-        {/* </FormControl> */}
+
         <div className={s.wrapBtnTextarea}>
           <button className={s.formBtn}>Upload</button>
-          <textarea
-            value="textarea"
+          <input
+            type="text"
             {...register("textarea")}
             className={s.formTextarea}
             placeholder="Upload your photo"
-          ></textarea>
+          ></input>
         </div>
         <div className={s.wrapFormSubmit}>
           <button type="submit" className={s.formSubmit} disabled={!isValid}>
