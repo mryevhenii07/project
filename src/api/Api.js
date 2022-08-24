@@ -1,9 +1,9 @@
 import axios from "axios";
-//fetchUser
-export function userApi() {
+
+export function fetchUser(count) {
   return axios
     .get(
-      "https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=6"
+      `https://frontend-test-assignment-api.abz.agency/api/v1/users?page=1&count=${count}`
     )
     .then((res) => res.data.users);
 }

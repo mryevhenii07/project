@@ -1,17 +1,14 @@
-import { useState, useEffect } from "react";
-import s from "./Users.module.scss";
-import { userApi, tokenApi } from "../../api/Api";
-
-import React from "react";
-import { withStyles, makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
+import React, { useState, useEffect } from "react";
 import Tooltip from "@material-ui/core/Tooltip";
-import Typography from "@material-ui/core/Typography";
+import { withStyles } from "@material-ui/core/styles";
 
-import Cover from "../../images/photo-cover.svg";
+import { fetchUser } from "../../api/Api";
+import s from "./Users.module.scss";
+import imgDefault from "../../images/photo-cover.svg";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
+    marginTop: 5,
     backgroundColor: "#000000",
     color: "#ffffff",
     boxShadow: theme.shadows[1],
@@ -21,19 +18,17 @@ const LightTooltip = withStyles((theme) => ({
 }))(Tooltip);
 
 const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [token, setToken] = useState([]);
+  const [count, setCount] = useState(6);
+  const [showMore, setShowMore] = useState(false);
 
-  useEffect(() => {
-    userApi().then(setUsers);
-    tokenApi().then(setToken);
-  }, []);
-  // console.log(users);
-  // console.log(token);
+  const [users, setUsers] = useState([]);
 
   const onClickMore = () => {
-    // console.log('dsds');
+    setCount((prevCount) => prevCount + 3);
   };
+  useEffect(() => {
+    fetchUser(count).then(setUsers);
+  }, [count]);
 
   return (
     <div className={s.users}>
@@ -41,23 +36,31 @@ const Users = () => {
       <ul className={s.usersList}>
         {users.map(({ id, email, phone, name, photo, position }) => (
           <li className={s.userItem} key={id}>
-            <div>
-              <img src={photo} alt="" width="70" height="70" />
+            <div className={s.userItemWrap}>
+              <img
+                src={photo || imgDefault}
+                alt="user img"
+                width="70"
+                height="70"
+              />
               <h3 className={s.userName}>{name}</h3>
-              <p className={s.profession}>{position}</p>
-              <LightTooltip title={email}>
-                <p className={s.userEmail}>{email}</p>
-              </LightTooltip>
-              {/* <p className={s.userEmail}>{email}</p> */}
-              <p className={s.userPhone}>{phone}</p>
+              <div className={s.wrapInfo}>
+                <p className={s.profession}>{position}</p>
+                <LightTooltip title={email}>
+                  <p className={s.userEmail}>{email}</p>
+                </LightTooltip>
+                <p className={s.userPhone}>{phone}</p>
+              </div>
             </div>
           </li>
         ))}
       </ul>
       <div className={s.wrapShowMore}>
-        <button className={s.showMore} onClick={onClickMore}>
-          Show more
-        </button>
+        {!showMore && (
+          <button className={s.showMore} onClick={onClickMore}>
+            Show more
+          </button>
+        )}
       </div>
     </div>
   );

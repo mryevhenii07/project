@@ -53,7 +53,6 @@ const Form = () => {
     reset();
   };
 
-  // console.log(data);
   return (
     <div className={s.wrapForm}>
       <h1 className={s.formMainTitle}>Working with POST request</h1>
@@ -77,7 +76,7 @@ const Form = () => {
             )}
           </div>
         </label>
-        <label htmlFor="">
+        <label htmlFor="" className={s.formLabel}>
           <TextField
             className={s.formInputEmail}
             type="email"
@@ -101,7 +100,7 @@ const Form = () => {
             )}
           </div>
         </label>
-        <label htmlFor="">
+        <label htmlFor="" className={s.formLabel}>
           <TextField
             className={s.formInputPhone}
             type="phone"

@@ -2,11 +2,11 @@
   margin: 140px auto;
   max-width: 1170px;
   min-height: 50px;
-  // border: 1px solid red;
 
   @media screen and (max-width: 768px) {
     max-width: 768px;
   }
+
   @media screen and (max-width: 360px) {
     max-width: 360px;
   }
@@ -18,6 +18,7 @@
     font-weight: 400;
     color: var(--main-color-text);
   }
+
   .usersList {
     margin-top: 50px;
     width: 100%;
@@ -25,64 +26,153 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
 
-    @media screen and (max-width: 1040px) {
-      // max-width: 1040px;
+    @media screen and (max-width: 1024px) {
+      max-width: 1024px;
+      grid-template-columns: repeat(3, 0fr);
+      justify-content: center;
     }
 
     @media screen and (max-width: 768px) {
       max-width: 768px;
-      grid-template-columns: repeat(2, 1fr);
+      grid-template-columns: repeat(2, 0fr);
+      gap: 15px;
+      justify-content: center;
     }
+
     @media screen and (max-width: 360px) {
       max-width: 360px;
-      grid-template-columns: repeat(1, 1fr);
+      grid-template-columns: repeat(1, 0fr);
+      gap: 15px;
+      justify-content: center;
     }
 
     .userItem {
       padding: 20px;
-      max-width: 370px;
-      // min-height: 254px;
-      // border: 1px solid red;
+      width: 330px;
       border-radius: 10px;
       display: flex;
       justify-content: center;
       background-color: var(--user-item-bg);
 
-      // @media screen and (max-width:1040px){
-
-      //    width: 282px;
-
-      // }
-      // @media screen and (max-width:768px){
-      //     width: 344px;
-
-      // }
-      // @media screen and (max-width:360px){
-      //     max-width: 328px;
-
-      // }
-
-      img {
-        margin: auto;
+      @media screen and (max-width: 1024px) {
+        width: 242px;
       }
-      .userName,
-      .profession {
-        text-align: center;
-        font-size: 16px;
-        line-height: 26px;
-        font-weight: 400;
-        margin-top: 20px;
+      @media screen and (max-width: 768px) {
+        width: 304px;
+      }
+      @media screen and (max-width: 360px) {
+        width: 288px;
       }
 
-      .userEmail {
-        cursor: pointer;
-      }
-      .userEmail,
-      .usePhone {
-        text-align: center;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 26px;
+      .userItemWrap {
+        width: 370px;
+
+        @media screen and (max-width: 1024px) {
+          width: 242px;
+        }
+
+        @media screen and (max-width: 768px) {
+          width: 304px;
+        }
+
+        @media screen and (max-width: 360px) {
+          width: 288px;
+        }
+
+        img {
+          margin: auto;
+        }
+
+        .userName {
+          text-align: center;
+          width: 330px;
+          display: block;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          font-size: 16px;
+          line-height: 26px;
+          font-weight: 400;
+          margin-top: 20px;
+
+          @media screen and (max-width: 1024px) {
+            width: 242px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          @media screen and (max-width: 768px) {
+            width: 304px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+
+          @media screen and (max-width: 360px) {
+            width: 288px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+          }
+        }
+        .wrapInfo {
+          margin-top: 20px;
+          width: 100%;
+          text-align: center;
+
+          .profession {
+            text-align: center;
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 400;
+          }
+
+          .userEmail {
+            width: 330px;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 26px;
+
+            @media screen and (max-width: 1024px) {
+              width: 242px;
+              display: block;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+
+            @media screen and (max-width: 768px) {
+              width: 304px;
+              display: block;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+
+            @media screen and (max-width: 360px) {
+              width: 288px;
+              display: block;
+              overflow: hidden;
+              white-space: nowrap;
+              text-overflow: ellipsis;
+            }
+          }
+
+          .usePhone {
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 26px;
+          }
+        }
       }
     }
   }
@@ -90,7 +180,8 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 54px;
+    margin-top: 50px;
+
     .showMore {
       font-family: "Nunito", sans-serif;
       width: 120px;
@@ -104,6 +195,7 @@
       font-weight: 400;
       line-height: 26px;
     }
+
     .showMore:hover {
       background-color: var(--bg-btn-hover);
     }
