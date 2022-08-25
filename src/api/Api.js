@@ -7,14 +7,14 @@ export function fetchUser(count) {
     )
     .then((res) => res.data.users);
 }
-//fetchToken
-export function tokenApi() {
+
+export function fetchToken() {
   return axios
     .get("https://frontend-test-assignment-api.abz.agency/api/v1/token")
     .then((res) => res.data);
 }
-//createUser
-export function postApi(users) {
+
+export function createUser(users) {
   return axios
     .post(`https://frontend-test-assignment-api.abz.agency/api/v1/users`, users)
     .then((res) => res.data);

@@ -7,6 +7,7 @@
     font-size: 40px;
     line-height: 40px;
     font-weight: 400;
+
     @media screen and (max-width: 360px) {
       padding: 0 15px;
     }
@@ -24,6 +25,7 @@
 
     .formLabel {
       width: 380px;
+
       @media screen and (max-width: 360px) {
         width: 328px;
       }
@@ -33,7 +35,8 @@
       .formInputPhone {
         width: 100%;
         margin-top: 35px;
-        border: 0px;
+        border: none;
+
         @media screen and (max-width: 360px) {
           width: 328px;
         }
@@ -41,39 +44,52 @@
 
       .wrapError {
         height: 15px;
-        width: 380px;
-        font-size: 12px;
-        color: red;
-      }
-      @media screen and (max-width: 360px) {
-        .wrapError {
-          width: 328px;
-        }
-      }
-      .wrapPhone {
         padding: 4px 10px;
-        height: 15px;
-        width: 100%;
-        font-size: 12px;
-        line-height: 14px;
-        font-weight: 400;
-        color: #7e7e7e;
-      }
 
-      .selectPosition {
-        font-size: 16px;
-        line-height: 26px;
-        font-weight: 400;
-        margin-top: 25px;
-      }
+        @media screen and (max-width: 360px) {
+          width: 305px;
+        }
 
-      .formRadio {
-        color: var(--main-color-text);
-        font-weight: 400;
-        line-height: 26px;
+        .error {
+          height: 15px;
+          width: 380px;
+          font-size: 12px;
+          line-height: 14px;
+          font-weight: 400;
+          color: red;
+
+          @media screen and (max-width: 360px) {
+            width: 100%;
+          }
+        }
+
+        .noError {
+          height: 15px;
+          width: 380px;
+          font-size: 12px;
+          line-height: 14px;
+          font-weight: 400;
+          color: #7e7e7e;
+
+          @media screen and (max-width: 360px) {
+            width: 100%;
+          }
+        }
       }
     }
 
+    .selectPosition {
+      font-size: 16px;
+      line-height: 26px;
+      font-weight: 400;
+      margin-top: 25px;
+    }
+
+    .formRadio {
+      color: var(--main-color-text);
+      font-weight: 400;
+      line-height: 26px;
+    }
     .wrapBtnTextarea {
       display: flex;
       width: 100%;
@@ -90,7 +106,9 @@
         justify-content: center;
         align-items: center;
         width: 83px;
-        height: 100%;
+        height: 54px;
+        border: none;
+        outline: none;
         border: 1px solid #000;
         font-weight: 400;
         font-size: 16px;
@@ -99,10 +117,17 @@
       }
 
       .formTextarea {
+        background-color: var(--body-bg);
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 26px;
         width: 100%;
-        height: 100%;
+        height: 52px;
         padding-left: 16px;
         resize: none;
+        border: none;
+        outline: none;
+        border: 1px solid #d0cfcf;
       }
     }
 

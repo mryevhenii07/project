@@ -11,7 +11,7 @@ import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import { postApi, fetchPosition } from "../../api/Api";
+import { createUser, fetchPosition } from "../../api/Api";
 
 import { addUser } from "../../store/userSlice/userSlice";
 
@@ -20,12 +20,9 @@ import s from "./Form.module.scss";
 const Form = () => {
   const [value, setValue] = useState("");
   const [data, setData] = useState("");
-  const [user, setUser] = useState("");
+  // const [user, setUser] = useState("");
   const [positions, setPositions] = useState([]);
 
-  // useEffect(() => {
-  //   userApi().then(setUser);
-  // }, []);
   useEffect(() => {
     fetchPosition().then(setPositions);
   }, []);
@@ -41,13 +38,20 @@ const Form = () => {
 
   const handleChange = (e) => {
     setValue(e.target.value);
-    // console.log(e.target.value);
   };
 
-  const onSubmit = ({ email, phone }) => {
-    console.log({ email, phone, position_id: value });
-    // postApi({ email, phone, position_id: value });
-    dispatch(addUser({ ...data }));
+  const onSubmit = ({ email, phone, yourName }) => {
+    createUser(
+      dispatch(
+        addUser({
+          email,
+          phone,
+          yourName,
+          position_id: value,
+        })
+      )
+    );
+
     setData(data);
     // console.log(data);
     reset();
@@ -96,18 +100,20 @@ const Form = () => {
           />
           <div className={s.wrapError}>
             {errors?.email && (
-              <p className={s.error}>{errors?.email?.message || "Error!"}</p>
+              <p className={s.error}>{errors?.email?.message || "secondary"}</p>
             )}
           </div>
         </label>
         <label htmlFor="" className={s.formLabel}>
           <TextField
+            color={isValid ? "secondary" : "primary"}
             className={s.formInputPhone}
             type="phone"
             {...register("phone", {
               pattern: {
-                // value: /^[+]{0,1}380([0-9]{9}),
-                message: "Invalid email address",
+                value: /^[+]{0,1}38[0-9]{10}$/i,
+                valid: "+38 (XXX) XXX-XX-44",
+                message: "+38 (XXX) XXX-XX-XX",
               },
             })}
             id="outlined-phone-input"
@@ -115,10 +121,13 @@ const Form = () => {
             autoComplete="current-phone"
             variant="outlined"
           />
-          <div className={s.wrapPhone}>
+          <div className={s.wrapError}>
             {/* +38 (XXX)XXX-XX-XX */}
-            {errors?.phone && (
+            {/* {errors?.phone && <p className={s.error}>{errors?.phone?.message || 'Error!'}</p>} */}
+            {errors?.phone ? (
               <p className={s.error}>{errors?.phone?.message || "Error!"}</p>
+            ) : (
+              <p className={s.noError}>+38 (XXX) XXX-XX-XX</p>
             )}
           </div>
         </label>
@@ -136,7 +145,7 @@ const Form = () => {
                 key={id}
                 className={s.formRadio}
                 value={name}
-                control={<Radio color="primary" />}
+                control={<Radio color="secondary" />}
                 label={name}
               />
             );
@@ -145,6 +154,10 @@ const Form = () => {
 
         <div className={s.wrapBtnTextarea}>
           <button className={s.formBtn}>Upload</button>
+          {/* <Button variant="contained" component="label">
+            Upload
+            <input type="file" hidden />
+          </Button> */}
           <input
             type="text"
             {...register("textarea")}
