@@ -4,10 +4,10 @@ const initialState = {
   yourName: null,
   email: null,
   phone: null,
-  checkbox: null,
-  token: null,
-  isLoggedIn: false,
+  photo: null,
   position_id: null,
+
+  token: null,
 };
 
 const userSlice = createSlice({
@@ -18,19 +18,19 @@ const userSlice = createSlice({
       state.yourName = action.payload.yourName;
       state.email = action.payload.email;
       state.phone = action.payload.phone;
-      state.checkbox = action.payload.checkbox;
-      state.token = action.payload.token;
-      state.isLoggedIn = action.payload.isLoggedIn;
       state.position_id = action.payload.position_id;
+      state.photo = action.payload.photo;
+
+      state.token = action.payload.token;
     },
     removeUser(state) {
       state.yourName = null;
       state.email = null;
       state.phone = null;
-      state.checkbox = null;
+      state.photo = null;
+      state.position_id = null;
+
       state.token = null;
-      state.isLoggedIn = false;
-      state.position_id = false;
     },
   },
 });

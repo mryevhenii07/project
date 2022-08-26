@@ -20,16 +20,21 @@ const LightTooltip = withStyles((theme) => ({
 const Users = () => {
   const [count, setCount] = useState(6);
   const [showMore, setShowMore] = useState(false);
+  const [totalCount, setTotalCount] = useState(8);
+  console.log(count);
 
   const [users, setUsers] = useState([]);
 
   const onClickMore = () => {
-    setCount((prevCount) => prevCount + 3);
+    // if (count === totalCount) {
+    //   setShowMore(true);
+    // }
+    setCount((prevCount) => prevCount + 1);
   };
   useEffect(() => {
     fetchUser(count).then(setUsers);
   }, [count]);
-
+  console.log(users);
   return (
     <div className={s.users}>
       <h2 className={s.usersMainTitle}>Working with GET request</h2>
@@ -38,6 +43,7 @@ const Users = () => {
           <li className={s.userItem} key={id}>
             <div className={s.userItemWrap}>
               <img
+                className={s.img}
                 src={photo || imgDefault}
                 alt="user img"
                 width="70"
@@ -56,11 +62,18 @@ const Users = () => {
         ))}
       </ul>
       <div className={s.wrapShowMore}>
-        {!showMore && (
+        {totalCount === count ? (
+          ""
+        ) : (
           <button className={s.showMore} onClick={onClickMore}>
             Show more
           </button>
         )}
+        {/* {!showMore && (
+          <button className={s.showMore} onClick={onClickMore}>
+            Show more
+          </button>
+        )} */}
       </div>
     </div>
   );

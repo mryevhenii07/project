@@ -36,6 +36,7 @@
         width: 100%;
         margin-top: 35px;
         border: none;
+        border: none;
 
         @media screen and (max-width: 360px) {
           width: 328px;
@@ -146,7 +147,7 @@
         line-height: 26px;
         border: none;
         outline: none;
-        color: #fff;
+        color: rgba(255, 255, 255, 0.87);
         background-color: var(--bg-btn-disabled);
       }
     }

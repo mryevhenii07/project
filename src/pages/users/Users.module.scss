@@ -48,44 +48,33 @@
 
     .userItem {
       padding: 20px;
-      width: 330px;
+      width: 370px;
       border-radius: 10px;
       display: flex;
       justify-content: center;
       background-color: var(--user-item-bg);
 
       @media screen and (max-width: 1024px) {
-        width: 242px;
+        width: 282px;
       }
       @media screen and (max-width: 768px) {
-        width: 304px;
+        width: 344px;
       }
       @media screen and (max-width: 360px) {
-        width: 288px;
+        width: 328px;
       }
 
       .userItemWrap {
-        width: 370px;
+        width: 100%;
 
-        @media screen and (max-width: 1024px) {
-          width: 242px;
-        }
-
-        @media screen and (max-width: 768px) {
-          width: 304px;
-        }
-
-        @media screen and (max-width: 360px) {
-          width: 288px;
-        }
-
-        img {
+        .img {
           margin: auto;
+          border-radius: 50%;
         }
 
         .userName {
           text-align: center;
-          width: 330px;
+          width: 100%;
           display: block;
           overflow: hidden;
           white-space: nowrap;
@@ -94,31 +83,8 @@
           line-height: 26px;
           font-weight: 400;
           margin-top: 20px;
-
-          @media screen and (max-width: 1024px) {
-            width: 242px;
-            display: block;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-
-          @media screen and (max-width: 768px) {
-            width: 304px;
-            display: block;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-
-          @media screen and (max-width: 360px) {
-            width: 288px;
-            display: block;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
         }
+
         .wrapInfo {
           margin-top: 20px;
           width: 100%;
@@ -132,7 +98,7 @@
           }
 
           .userEmail {
-            width: 330px;
+            width: 100%;
             display: block;
             overflow: hidden;
             white-space: nowrap;
@@ -141,30 +107,6 @@
             font-size: 16px;
             font-weight: 400;
             line-height: 26px;
-
-            @media screen and (max-width: 1024px) {
-              width: 242px;
-              display: block;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
-
-            @media screen and (max-width: 768px) {
-              width: 304px;
-              display: block;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
-
-            @media screen and (max-width: 360px) {
-              width: 288px;
-              display: block;
-              overflow: hidden;
-              white-space: nowrap;
-              text-overflow: ellipsis;
-            }
           }
 
           .usePhone {

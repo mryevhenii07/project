@@ -5,28 +5,53 @@ import { useDispatch } from "react-redux";
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
-import Button from "@material-ui/core/Button";
+// import { withStyles } from '@material-ui/core';
 
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
-import { createUser, fetchPosition } from "../../api/Api";
+import { createUser, fetchPosition, fetchToken } from "../../api/Api";
 
 import { addUser } from "../../store/userSlice/userSlice";
 
 import s from "./Form.module.scss";
 
+// const CssTextField = withStyles({
+//   root: {
+//     '& label.Mui-focused': {
+//       color: '#b4b4b4',
+//     },
+//     '& .MuiInput-underline:after': {
+//       borderBottomColor: 'yellow',
+//     },
+//     '& .MuiOutlinedInput-root': {
+//       '& fieldset': {
+//         borderColor: 'b4b4b4',
+//       },
+//       '&:hover fieldset': {
+//         borderColor: '#D0CFCF',
+//       },
+//       '&.Mui-focused fieldset': {
+//         borderColor: 'yellow',
+//       },
+//     },
+//   },
+// })(TextField);
+
 const Form = () => {
   const [value, setValue] = useState("");
   const [data, setData] = useState("");
+  const [token, setToken] = useState("");
   // const [user, setUser] = useState("");
   const [positions, setPositions] = useState([]);
 
   useEffect(() => {
     fetchPosition().then(setPositions);
+    fetchToken().then(setToken);
   }, []);
 
+  console.log(token);
   const dispatch = useDispatch();
 
   const {
@@ -40,21 +65,19 @@ const Form = () => {
     setValue(e.target.value);
   };
 
-  const onSubmit = ({ email, phone, yourName }) => {
-    createUser(
-      dispatch(
-        addUser({
-          email,
-          phone,
-          yourName,
-          position_id: value,
-        })
-      )
-    );
-
-    setData(data);
-    // console.log(data);
-    reset();
+  const onSubmit = ({ email, yourName, position_id, photo, phone }) => {
+    // { email, yourName, position_id, photo: photo[0].name, token },
+    // dispatch(
+    //   addUser({
+    //     email,
+    //     phone,
+    //     yourName,
+    //     position_id,
+    //     photo: photo[0].name,
+    //     token,
+    //   }),
+    // );
+    console.log(email, yourName, position_id, photo, phone);
   };
 
   return (
@@ -80,6 +103,7 @@ const Form = () => {
             )}
           </div>
         </label>
+
         <label htmlFor="" className={s.formLabel}>
           <TextField
             className={s.formInputEmail}
@@ -100,19 +124,19 @@ const Form = () => {
           />
           <div className={s.wrapError}>
             {errors?.email && (
-              <p className={s.error}>{errors?.email?.message || "secondary"}</p>
+              <p className={s.error}>{errors?.email?.message || "errors"}</p>
             )}
           </div>
         </label>
         <label htmlFor="" className={s.formLabel}>
           <TextField
-            color={isValid ? "secondary" : "primary"}
+            // color={isValid ? 'secondary' : 'primary'}
             className={s.formInputPhone}
             type="phone"
             {...register("phone", {
+              required: "Required field",
               pattern: {
-                value: /^[+]{0,1}38[0-9]{10}$/i,
-                valid: "+38 (XXX) XXX-XX-44",
+                value: /^[+]{0,1}380[0-9]{9}$/i,
                 message: "+38 (XXX) XXX-XX-XX",
               },
             })}
@@ -142,6 +166,7 @@ const Form = () => {
           {positions.map(({ id, name }) => {
             return (
               <FormControlLabel
+                {...register("position", { required: "Required field" })}
                 key={id}
                 className={s.formRadio}
                 value={name}
@@ -154,13 +179,9 @@ const Form = () => {
 
         <div className={s.wrapBtnTextarea}>
           <button className={s.formBtn}>Upload</button>
-          {/* <Button variant="contained" component="label">
-            Upload
-            <input type="file" hidden />
-          </Button> */}
           <input
-            type="text"
-            {...register("textarea")}
+            type="file"
+            {...register("photo")}
             className={s.formTextarea}
             placeholder="Upload your photo"
           ></input>

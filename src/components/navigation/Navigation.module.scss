@@ -1,5 +1,6 @@
 .list {
   display: flex;
+
   .item {
     width: 100px;
     height: 34px;
@@ -14,9 +15,11 @@
     font-weight: 400;
     cursor: pointer;
   }
+
   .item:hover {
     background-color: var(--bg-btn-hover);
   }
+
   .item:first-child {
     margin-right: 10px;
   }

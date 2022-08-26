@@ -1,5 +1,5 @@
 import { Switch, Route } from "react-router-dom";
-
+import { ClipLoader } from "react-spinners";
 import AppBar from "./components/appBar/AppBar";
 import Main from "./components/main/Main";
 import Users from "./pages/users/Users";
@@ -11,6 +11,7 @@ function App() {
   return (
     <div>
       <AppBar />
+      <ClipLoader color="#00BDD3" size={48} />
       <Switch>
         <Route exact path="/">
           <Main />
