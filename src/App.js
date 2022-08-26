@@ -1,29 +1,46 @@
+import { lazy, Suspense } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+
 import AppBar from "./components/appBar/AppBar";
 import Main from "./components/main/Main";
-import Users from "./pages/users/Users";
-import Form from "./pages/form/Form";
 import Footer from "./components/footer/Footer";
-import SuccessfullyRegist from "./components/successfullyRegist/SuccessfullyRegist";
+
+import s from "./app.module.scss";
+
+const Form = lazy(() => import("./pages/form/Form"));
+const SuccessfullyRegist = lazy(() =>
+  import("./pages/successfullyRegist/SuccessfullyRegist")
+);
+const Users = lazy(() => import("./pages/users/Users"));
 
 function App() {
   return (
     <div>
       <AppBar />
-      <ClipLoader color="#00BDD3" size={48} />
-      <Switch>
-        <Route exact path="/">
-          <Main />
-        </Route>
-        <Route path="/login">
-          <Form />
-        </Route>
-        <Route path="/users">
-          <Users />
-        </Route>
-      </Switch>
-      <SuccessfullyRegist />
+      <Suspense
+        fallback={
+          <div className={s.wrapSpinner}>
+            <ClipLoader color="#00BDD3" size={48} />
+          </div>
+        }
+      >
+        <Switch>
+          <Route exact path="/">
+            <Main />
+          </Route>
+          <Route path="/login">
+            <Form />
+          </Route>
+          <Route path="/users">
+            <Users />
+          </Route>
+
+          <Route path="/success">
+            <SuccessfullyRegist />
+          </Route>
+        </Switch>
+      </Suspense>
       <Footer />
     </div>
   );

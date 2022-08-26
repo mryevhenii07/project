@@ -192,7 +192,7 @@ const Form = () => {
             className={isValid ? `${s.actFormSubmit}` : `${s.formSubmit}`}
             disabled={!isValid}
           >
-            Sing in
+            Sing up
           </button>
         </div>
       </form>
