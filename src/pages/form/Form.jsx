@@ -181,13 +181,17 @@ const Form = () => {
           <button className={s.formBtn}>Upload</button>
           <input
             type="file"
-            {...register("photo")}
+            {...register("photo", { required: "Required field" })}
             className={s.formTextarea}
             placeholder="Upload your photo"
           ></input>
         </div>
         <div className={s.wrapFormSubmit}>
-          <button type="submit" className={s.formSubmit} disabled={!isValid}>
+          <button
+            type="submit"
+            className={isValid ? `${s.actFormSubmit}` : `${s.formSubmit}`}
+            disabled={!isValid}
+          >
             Sing in
           </button>
         </div>
