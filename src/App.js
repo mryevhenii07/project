@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Redirect } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
 
 import AppBar from "./components/appBar/AppBar";
@@ -38,6 +38,9 @@ function App() {
 
           <Route path="/success">
             <SuccessfullyRegist />
+          </Route>
+          <Route path="*">
+            <Main />
           </Route>
         </Switch>
       </Suspense>

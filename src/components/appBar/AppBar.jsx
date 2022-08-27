@@ -9,7 +9,7 @@ const AppBar = () => {
     <header className={s.header}>
       <div className={s.wrapHeader}>
         <Link to="/">
-          <img src={Logo} alt="" />
+          <img src={Logo} alt="/" />
         </Link>
 
         <Navigation />
