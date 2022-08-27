@@ -19,22 +19,26 @@ const LightTooltip = withStyles((theme) => ({
 
 const Users = () => {
   const [count, setCount] = useState(6);
-  const [showMore, setShowMore] = useState(false);
-  const [totalCount, setTotalCount] = useState(8);
-  console.log(count);
-
+  const [totalCount, setTotalCount] = useState("");
   const [users, setUsers] = useState([]);
 
   const onClickMore = () => {
-    // if (count === totalCount) {
-    //   setShowMore(true);
-    // }
-    setCount((prevCount) => prevCount + 1);
+    setCount((prevCount) => prevCount + 3);
   };
+
   useEffect(() => {
-    fetchUser(count).then(setUsers);
+    fetchUser(count)
+      .then((res) => res.users)
+      .then(setUsers)
+      .catch((error) => console.error(error));
+
+    fetchUser(count)
+      .then((res) => res.total_users)
+      .then(setTotalCount)
+      .catch((error) => console.error(error));
   }, [count]);
-  console.log(users);
+
+  console.log(totalCount);
   return (
     <div className={s.users}>
       <h2 className={s.usersMainTitle}>Working with GET request</h2>
@@ -62,18 +66,13 @@ const Users = () => {
         ))}
       </ul>
       <div className={s.wrapShowMore}>
-        {totalCount === count ? (
+        {totalCount <= count ? (
           ""
         ) : (
           <button className={s.showMore} onClick={onClickMore}>
             Show more
           </button>
         )}
-        {/* {!showMore && (
-          <button className={s.showMore} onClick={onClickMore}>
-            Show more
-          </button>
-        )} */}
       </div>
     </div>
   );

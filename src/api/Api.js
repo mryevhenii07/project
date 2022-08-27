@@ -5,7 +5,7 @@ const BASE_URL = "https://frontend-test-assignment-api.abz.agency/api/v1/";
 export function fetchUser(count) {
   return axios
     .get(`${BASE_URL}users?page=1&count=${count}`)
-    .then((response) => response.data.users);
+    .then((response) => response.data);
 }
 
 export function fetchToken() {
