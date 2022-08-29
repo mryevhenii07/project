@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 
@@ -43,16 +43,18 @@ const Form = () => {
   const [value, setValue] = useState("");
   const [data, setData] = useState("");
   const [token, setToken] = useState("");
-  // const [user, setUser] = useState("");
-  const [positions, setPositions] = useState([]);
 
+  const inputRef = useRef();
+
+  const onChangePhoto = () => {
+    console.log(inputRef);
+  };
+
+  const [positions, setPositions] = useState([]);
   useEffect(() => {
     fetchPosition().then(setPositions);
     fetchToken().then(setToken);
   }, []);
-
-  console.log(token);
-  const dispatch = useDispatch();
 
   const {
     register,
@@ -62,22 +64,19 @@ const Form = () => {
   } = useForm({ mode: "onChange" });
 
   const handleChange = (e) => {
-    setValue(e.target.value);
+    setValue(parseInt(e.target.value));
+    // console.log(e.target.value);
   };
 
-  const onSubmit = ({ email, yourName, position_id, photo, phone }) => {
-    // { email, yourName, position_id, photo: photo[0].name, token },
-    // dispatch(
-    //   addUser({
-    //     email,
-    //     phone,
-    //     yourName,
-    //     position_id,
-    //     photo: photo[0].name,
-    //     token,
-    //   }),
-    // );
-    console.log(email, yourName, position_id, photo, phone);
+  const onSubmit = ({ email, name, position_id, photo, phone }) => {
+    const formData = new FormData();
+    formData.set("email", email);
+    formData.set("name", name);
+    formData.set("phone", phone);
+    formData.set("position_id", position_id);
+    formData.set("photo", photo[0]);
+
+    createUser(token, formData);
   };
 
   return (
@@ -87,7 +86,7 @@ const Form = () => {
         <label htmlFor="" className={s.formLabel}>
           <TextField
             className={s.formInputYourName}
-            {...register("yourName", {
+            {...register("name", {
               required: "Required field",
               minLength: { value: 2, message: "Minimum 2 characters" },
               maxLength: { value: 60, message: "Maximum 60 characters" },
@@ -98,8 +97,8 @@ const Form = () => {
             variant="outlined"
           />
           <div className={s.wrapError}>
-            {errors?.yourName && (
-              <p className={s.error}>{errors?.yourName?.message || "Error!"}</p>
+            {errors?.name && (
+              <p className={s.error}>{errors?.name?.message || "Error!"}</p>
             )}
           </div>
         </label>
@@ -130,7 +129,6 @@ const Form = () => {
         </label>
         <label htmlFor="" className={s.formLabel}>
           <TextField
-            // color={isValid ? 'secondary' : 'primary'}
             className={s.formInputPhone}
             type="phone"
             {...register("phone", {
@@ -146,8 +144,6 @@ const Form = () => {
             variant="outlined"
           />
           <div className={s.wrapError}>
-            {/* +38 (XXX)XXX-XX-XX */}
-            {/* {errors?.phone && <p className={s.error}>{errors?.phone?.message || 'Error!'}</p>} */}
             {errors?.phone ? (
               <p className={s.error}>{errors?.phone?.message || "Error!"}</p>
             ) : (
@@ -166,10 +162,10 @@ const Form = () => {
           {positions.map(({ id, name }) => {
             return (
               <FormControlLabel
-                {...register("position", { required: "Required field" })}
+                {...register("position_id", { required: "Required field" })}
                 key={id}
                 className={s.formRadio}
-                value={name}
+                value={id}
                 control={<Radio color="secondary" />}
                 label={name}
               />
@@ -177,15 +173,27 @@ const Form = () => {
           })}
         </RadioGroup>
 
-        <div className={s.wrapBtnTextarea}>
-          <button className={s.formBtn}>Upload</button>
+        <button className={s.wrapBtnPhoto} onClick={onChangePhoto}>
+          <div className={s.upload}>Upload</div>{" "}
           <input
+            // ref={inputRef}
             type="file"
-            {...register("photo", { required: "Required field" })}
-            className={s.formTextarea}
+            {...register("photo", {
+              required: "Required field",
+              validate: {
+                lessThan5MB: (files) => files[0]?.size < 5000000 || "Max 5MB",
+                acceptedFormats: (files) =>
+                  ["image/jpeg", "image/jpg"].includes(files[0]?.type) ||
+                  "not jpeg",
+              },
+            })}
+            // type="hidden"
             placeholder="Upload your photo"
           ></input>
-        </div>
+        </button>
+
+        {/* <button>intRef.current.click()</button> */}
+
         <div className={s.wrapFormSubmit}>
           <button
             type="submit"

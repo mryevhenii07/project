@@ -12,9 +12,9 @@ export function fetchToken() {
   return axios.get(`${BASE_URL}token`).then((response) => response.data.token);
 }
 
-export function createUser(users) {
+export function createUser(token, user) {
   return axios
-    .post(`${BASE_URL}users`, users)
+    .post(`${BASE_URL}users`, user, { headers: { Token: token } })
     .then((response) => response.data);
 }
 export function fetchPosition() {

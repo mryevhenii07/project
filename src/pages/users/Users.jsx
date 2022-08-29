@@ -28,17 +28,19 @@ const Users = () => {
 
   useEffect(() => {
     fetchUser(count)
-      .then((res) => res.users)
-      .then(setUsers)
+      // .then((res) => res.users)
+      .then((response) => {
+        setUsers(response.users);
+        setTotalCount(response.total_users);
+      })
       .catch((error) => console.error(error));
 
-    fetchUser(count)
-      .then((res) => res.total_users)
-      .then(setTotalCount)
-      .catch((error) => console.error(error));
+    // fetchUser(count)
+    //   .then((res) => res.total_users)
+    //   .then(setTotalCount)
+    //   .catch((error) => console.error(error));
   }, [count]);
 
-  console.log(totalCount);
   return (
     <div className={s.users}>
       <h2 className={s.usersMainTitle}>Working with GET request</h2>
@@ -66,9 +68,7 @@ const Users = () => {
         ))}
       </ul>
       <div className={s.wrapShowMore}>
-        {totalCount <= count ? (
-          ""
-        ) : (
+        {totalCount > count && (
           <button className={s.showMore} onClick={onClickMore}>
             Show more
           </button>
