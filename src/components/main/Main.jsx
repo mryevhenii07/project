@@ -7,7 +7,6 @@ const Main = () => {
     <main className={s.main}>
       <div className={s.wrapMain}>
         <div className={s.mainBlock}>
-          {" "}
           <h1 className={s.mainTitle}>
             Test assignment for front-end developer
           </h1>

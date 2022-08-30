@@ -1,6 +1,8 @@
 import { lazy, Suspense } from "react";
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
+
+import React from "react";
 
 import AppBar from "./components/appBar/AppBar";
 import Main from "./components/main/Main";

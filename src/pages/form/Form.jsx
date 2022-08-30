@@ -1,11 +1,11 @@
 import { useState, useEffect, useRef } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
 
 import React from "react";
 import TextField from "@material-ui/core/TextField";
 
 // import { withStyles } from '@material-ui/core';
+// import { makeStyles } from '@material-ui/core/styles';
 
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -13,35 +13,10 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import { createUser, fetchPosition, fetchToken } from "../../api/Api";
 
-import { addUser } from "../../store/userSlice/userSlice";
-
 import s from "./Form.module.scss";
-
-// const CssTextField = withStyles({
-//   root: {
-//     '& label.Mui-focused': {
-//       color: '#b4b4b4',
-//     },
-//     '& .MuiInput-underline:after': {
-//       borderBottomColor: 'yellow',
-//     },
-//     '& .MuiOutlinedInput-root': {
-//       '& fieldset': {
-//         borderColor: 'b4b4b4',
-//       },
-//       '&:hover fieldset': {
-//         borderColor: '#D0CFCF',
-//       },
-//       '&.Mui-focused fieldset': {
-//         borderColor: 'yellow',
-//       },
-//     },
-//   },
-// })(TextField);
 
 const Form = () => {
   const [value, setValue] = useState("");
-  const [data, setData] = useState("");
   const [token, setToken] = useState("");
 
   const inputRef = useRef();
@@ -77,7 +52,29 @@ const Form = () => {
     formData.set("photo", photo[0]);
 
     createUser(token, formData);
+    reset();
   };
+  // const CssTextField = withStyles({
+  //   root: {
+  // '& label.Mui-focused': {
+  //   color: 'red',
+  // },
+  // '& .MuiInput-underline:after': {
+  //   borderBottomColor: 'red',
+  // },
+  // '& .MuiOutlinedInput-root': {
+  //   '& fieldset': {
+  //     borderColor: 'red',
+  //   },
+  //   '&:hover fieldset': {
+  //     borderColor: 'gray',
+  //   },
+  //   '&.Mui-focused fieldset': {
+  //     borderColor: 'red',
+  //   },
+  // },
+  //   },
+  // })(TextField);
 
   return (
     <div className={s.wrapForm}>
@@ -109,10 +106,10 @@ const Form = () => {
             type="email"
             {...register("email", {
               required: "Required field",
-              minLength: { value: 7, message: " Minimum 7 characters" },
-              maxLength: { value: 26, message: "Maximum 26 characters" },
               pattern: {
-                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                value:
+                  // eslint-disable-next-line no-control-regex
+                  /^(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])$/i,
                 message: "Invalid email address",
               },
             })}
@@ -172,24 +169,24 @@ const Form = () => {
             );
           })}
         </RadioGroup>
+        <input
+          ref={inputRef}
+          type="file"
+          {...register("photo", {
+            required: "Required field",
+            validate: {
+              lessThan5MB: (files) => files[0]?.size < 5000000 || "Max 5MB",
+              acceptedFormats: (files) =>
+                ["image/jpeg", "image/jpg"].includes(files[0]?.type) ||
+                "errror",
+            },
+          })}
+          type="hidden"
+        />
 
         <button className={s.wrapBtnPhoto} onClick={onChangePhoto}>
-          <div className={s.upload}>Upload</div>{" "}
-          <input
-            // ref={inputRef}
-            type="file"
-            {...register("photo", {
-              required: "Required field",
-              validate: {
-                lessThan5MB: (files) => files[0]?.size < 5000000 || "Max 5MB",
-                acceptedFormats: (files) =>
-                  ["image/jpeg", "image/jpg"].includes(files[0]?.type) ||
-                  "not jpeg",
-              },
-            })}
-            // type="hidden"
-            placeholder="Upload your photo"
-          ></input>
+          <div className={s.upload}>Upload</div>
+          <div className={s.uploadPhoto}>Upload your photo</div>
         </button>
 
         {/* <button>intRef.current.click()</button> */}
