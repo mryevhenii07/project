@@ -1,7 +1,13 @@
 .wrapBlock {
-  margin: 0 auto;
+  margin: 50px auto;
   max-width: 1170px;
-  border: 1px solid red;
+  min-height: 580px;
+  @media screen and (max-width: 768px) {
+    max-width: 768px;
+  }
+  @media screen and (max-width: 360px) {
+    max-width: 360px;
+  }
 
   .title {
     font-size: 40px;

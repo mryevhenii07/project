@@ -45,6 +45,9 @@
           width: 328px;
         }
       }
+      .formInputYourName {
+        color: red;
+      }
       // .test {
       //   outline: none;
       //   border: 1px solid green;
@@ -108,6 +111,9 @@
       display: flex;
       border: none;
       outline: none;
+      @media screen and (max-width: 360px) {
+        width: 100%;
+      }
 
       .upload {
         display: flex;
@@ -124,6 +130,7 @@
         line-height: 26px;
         background-color: #fff;
       }
+      // .upload:hover{display: none;}
 
       .uploadPhoto {
         display: flex;
@@ -144,7 +151,7 @@
 
     .wrapFormSubmit {
       width: 100%;
-      margin-top: 50px;
+      margin-top: 35px;
       display: flex;
       justify-content: center;
 

@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { useForm } from "react-hook-form";
-
-import React from "react";
+import { useState, useEffect } from "react";
+import InputMask from "react-input-mask";
+import { useForm, Controller } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
 
 // import { withStyles } from '@material-ui/core';
-// import { makeStyles } from '@material-ui/core/styles';
 
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
@@ -15,15 +15,38 @@ import { createUser, fetchPosition, fetchToken } from "../../api/Api";
 
 import s from "./Form.module.scss";
 
+// const CssTextField = withStyles({
+//   root: {
+//     '& label.Mui-focused': {
+//       color: 'gray',
+//     },
+//     '& .MuiInput-underline:after': {
+//       borderBottomColor: 'gray',
+//     },
+//     '& .MuiOutlinedInput-root': {
+//       '& fieldset': {
+//         borderColor: 'gray',
+//       },
+//       '&:hover fieldset': {
+//         borderColor: 'gray',
+//       },
+//       '&.Mui-focused fieldset': {
+//         borderColor: 'gray',
+//       },
+//     },
+//   },
+// })(TextField);
+
 const Form = () => {
   const [value, setValue] = useState("");
   const [token, setToken] = useState("");
-
-  const inputRef = useRef();
+  // const [img, setImg] = useState('');
 
   const onChangePhoto = () => {
-    console.log(inputRef);
+    console.log("jj");
   };
+  const { push } = useHistory();
+  // console.log(history);
 
   const [positions, setPositions] = useState([]);
   useEffect(() => {
@@ -32,6 +55,7 @@ const Form = () => {
   }, []);
 
   const {
+    control, //mask
     register,
     handleSubmit,
     reset,
@@ -42,6 +66,7 @@ const Form = () => {
     setValue(parseInt(e.target.value));
     // console.log(e.target.value);
   };
+  // console.log('1', token);
 
   const onSubmit = ({ email, name, position_id, photo, phone }) => {
     const formData = new FormData();
@@ -52,29 +77,9 @@ const Form = () => {
     formData.set("photo", photo[0]);
 
     createUser(token, formData);
+    push("/success");
     reset();
   };
-  // const CssTextField = withStyles({
-  //   root: {
-  // '& label.Mui-focused': {
-  //   color: 'red',
-  // },
-  // '& .MuiInput-underline:after': {
-  //   borderBottomColor: 'red',
-  // },
-  // '& .MuiOutlinedInput-root': {
-  //   '& fieldset': {
-  //     borderColor: 'red',
-  //   },
-  //   '&:hover fieldset': {
-  //     borderColor: 'gray',
-  //   },
-  //   '&.Mui-focused fieldset': {
-  //     borderColor: 'red',
-  //   },
-  // },
-  //   },
-  // })(TextField);
 
   return (
     <div className={s.wrapForm}>
@@ -88,6 +93,7 @@ const Form = () => {
               minLength: { value: 2, message: "Minimum 2 characters" },
               maxLength: { value: 60, message: "Maximum 60 characters" },
             })}
+            error={!!errors.name?.message}
             id="outlined-text-input"
             label="Your name"
             autoComplete="current-text"
@@ -113,6 +119,7 @@ const Form = () => {
                 message: "Invalid email address",
               },
             })}
+            error={!!errors.email?.message}
             id="outlined-email-input"
             label="Email"
             autoComplete="current-email"
@@ -125,9 +132,41 @@ const Form = () => {
           </div>
         </label>
         <label htmlFor="" className={s.formLabel}>
+          {/* <Controller
+            name="phone"
+            control={control}
+            // as={<MaskedInput mask="(999)-999-9999" />}
+            rules={{
+              ...register('phone', {
+                required: 'Required field',
+                pattern: {
+                  value: /^[+]{0,1}380[0-9]{9}$/i,
+                  message: '+38 (XXX) XXX-XX-XX',
+                },
+              }),
+            }}
+            render={({ field: { onChange, value } }) => (
+              <InputMask mask="+38 (099) 999 99 99" value={value} onChange={onChange}>
+                {(inputProps) => (
+                  <TextField
+                    $error={false}
+                    // error={!!errors.phone?.message}
+                    label="Phone"
+                    variant="outlined"
+                    type="text"
+                    fullWidth
+                    required
+                    {...inputProps}
+                  />
+                )}
+              </InputMask>
+            )}
+          /> */}
+
           <TextField
             className={s.formInputPhone}
-            type="phone"
+            error={!!errors.phone?.message}
+            type="number"
             {...register("phone", {
               required: "Required field",
               pattern: {
@@ -140,6 +179,7 @@ const Form = () => {
             autoComplete="current-phone"
             variant="outlined"
           />
+
           <div className={s.wrapError}>
             {errors?.phone ? (
               <p className={s.error}>{errors?.phone?.message || "Error!"}</p>
@@ -148,6 +188,7 @@ const Form = () => {
             )}
           </div>
         </label>
+
         <p className={s.selectPosition}>Select your position</p>
 
         <RadioGroup
@@ -169,27 +210,40 @@ const Form = () => {
             );
           })}
         </RadioGroup>
-        <input
-          ref={inputRef}
-          type="file"
-          {...register("photo", {
-            required: "Required field",
-            validate: {
-              lessThan5MB: (files) => files[0]?.size < 5000000 || "Max 5MB",
-              acceptedFormats: (files) =>
-                ["image/jpeg", "image/jpg"].includes(files[0]?.type) ||
-                "errror",
-            },
-          })}
-          type="hidden"
-        />
 
-        <button className={s.wrapBtnPhoto} onClick={onChangePhoto}>
-          <div className={s.upload}>Upload</div>
+        <div className={s.wrapBtnPhoto}>
+          <Button variant="contained" component="label" className={s.upload}>
+            Upload
+            <input
+              errors={errors}
+              type="file"
+              {...register("photo", {
+                required: "Required field",
+                validate: {
+                  lessThan5MB: (files) => files[0]?.size < 5000000 || "Max 5MB",
+                  acceptedFormats: (files) =>
+                    ["image/jpeg", "image/jpg"].includes(files[0]?.type) ||
+                    "Invalid img",
+                },
+              })}
+              hidden
+            />
+          </Button>
           <div className={s.uploadPhoto}>Upload your photo</div>
-        </button>
+        </div>
 
-        {/* <button>intRef.current.click()</button> */}
+        <div
+          style={{
+            fontSize: "12px",
+            height: "15px",
+            color: "red",
+            paddingLeft: "10px",
+          }}
+        >
+          {errors?.photo && (
+            <p className={s.error}>{errors?.photo?.message || "errors"}</p>
+          )}
+        </div>
 
         <div className={s.wrapFormSubmit}>
           <button

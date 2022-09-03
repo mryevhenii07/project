@@ -1,12 +1,22 @@
 .footer {
-  margin: 10px auto;
-  max-width: 1170px;
+  margin: 0 auto;
+  width: 1170px;
   height: 60px;
   display: flex;
   align-items: center;
   border-top: 1px solid #d0cfcf;
 
   @media screen and (max-width: 1040px) {
+    width: 1040px;
+    padding: 0 20px;
+  }
+
+  @media screen and (max-width: 768px) {
+    width: 768px;
+    padding: 0 20px;
+  }
+  @media screen and (max-width: 360px) {
+    max-width: 360px;
     padding: 0 20px;
   }
 }

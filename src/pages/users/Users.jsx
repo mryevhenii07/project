@@ -8,7 +8,7 @@ import imgDefault from "../../images/photo-cover.svg";
 
 const LightTooltip = withStyles((theme) => ({
   tooltip: {
-    marginTop: 5,
+    marginTop: 4,
     backgroundColor: "#000000",
     color: "#ffffff",
     boxShadow: theme.shadows[1],
@@ -28,17 +28,11 @@ const Users = () => {
 
   useEffect(() => {
     fetchUser(count)
-      // .then((res) => res.users)
       .then((response) => {
         setUsers(response.users);
         setTotalCount(response.total_users);
       })
       .catch((error) => console.error(error));
-
-    // fetchUser(count)
-    //   .then((res) => res.total_users)
-    //   .then(setTotalCount)
-    //   .catch((error) => console.error(error));
   }, [count]);
 
   return (
@@ -50,7 +44,7 @@ const Users = () => {
             <div className={s.userItemWrap}>
               <img
                 className={s.img}
-                src={photo || imgDefault}
+                src={photo.split(".")?.includes("png") ? imgDefault : photo}
                 alt="user img"
                 width="70"
                 height="70"
