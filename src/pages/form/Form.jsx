@@ -1,52 +1,23 @@
-import { useState, useEffect } from "react";
-import InputMask from "react-input-mask";
-import { useForm, Controller } from "react-hook-form";
+import { useState, useEffect, useContext } from "react";
+import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-
-// import { withStyles } from '@material-ui/core';
 
 import Radio from "@material-ui/core/Radio";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 
 import { createUser, fetchPosition, fetchToken } from "../../api/Api";
-
 import s from "./Form.module.scss";
-
-// const CssTextField = withStyles({
-//   root: {
-//     '& label.Mui-focused': {
-//       color: 'gray',
-//     },
-//     '& .MuiInput-underline:after': {
-//       borderBottomColor: 'gray',
-//     },
-//     '& .MuiOutlinedInput-root': {
-//       '& fieldset': {
-//         borderColor: 'gray',
-//       },
-//       '&:hover fieldset': {
-//         borderColor: 'gray',
-//       },
-//       '&.Mui-focused fieldset': {
-//         borderColor: 'gray',
-//       },
-//     },
-//   },
-// })(TextField);
+import { IsNav } from "../../App";
 
 const Form = () => {
   const [value, setValue] = useState("");
   const [token, setToken] = useState("");
-  // const [img, setImg] = useState('');
+  const { setIsNav } = useContext(IsNav);
 
-  const onChangePhoto = () => {
-    console.log("jj");
-  };
   const { push } = useHistory();
-  // console.log(history);
 
   const [positions, setPositions] = useState([]);
   useEffect(() => {
@@ -55,7 +26,6 @@ const Form = () => {
   }, []);
 
   const {
-    control, //mask
     register,
     handleSubmit,
     reset,
@@ -64,9 +34,7 @@ const Form = () => {
 
   const handleChange = (e) => {
     setValue(parseInt(e.target.value));
-    // console.log(e.target.value);
   };
-  // console.log('1', token);
 
   const onSubmit = ({ email, name, position_id, photo, phone }) => {
     const formData = new FormData();
@@ -78,6 +46,8 @@ const Form = () => {
 
     createUser(token, formData);
     push("/success");
+    setIsNav(false);
+
     reset();
   };
 
@@ -132,37 +102,6 @@ const Form = () => {
           </div>
         </label>
         <label htmlFor="" className={s.formLabel}>
-          {/* <Controller
-            name="phone"
-            control={control}
-            // as={<MaskedInput mask="(999)-999-9999" />}
-            rules={{
-              ...register('phone', {
-                required: 'Required field',
-                pattern: {
-                  value: /^[+]{0,1}380[0-9]{9}$/i,
-                  message: '+38 (XXX) XXX-XX-XX',
-                },
-              }),
-            }}
-            render={({ field: { onChange, value } }) => (
-              <InputMask mask="+38 (099) 999 99 99" value={value} onChange={onChange}>
-                {(inputProps) => (
-                  <TextField
-                    $error={false}
-                    // error={!!errors.phone?.message}
-                    label="Phone"
-                    variant="outlined"
-                    type="text"
-                    fullWidth
-                    required
-                    {...inputProps}
-                  />
-                )}
-              </InputMask>
-            )}
-          /> */}
-
           <TextField
             className={s.formInputPhone}
             error={!!errors.phone?.message}
@@ -215,6 +154,9 @@ const Form = () => {
           <Button variant="contained" component="label" className={s.upload}>
             Upload
             <input
+              onChange={(e) => {
+                console.log(e.target.value);
+              }}
               errors={errors}
               type="file"
               {...register("photo", {
@@ -223,7 +165,7 @@ const Form = () => {
                   lessThan5MB: (files) => files[0]?.size < 5000000 || "Max 5MB",
                   acceptedFormats: (files) =>
                     ["image/jpeg", "image/jpg"].includes(files[0]?.type) ||
-                    "Invalid img",
+                    "Invalid img , you need select jpeg or jpg",
                 },
               })}
               hidden

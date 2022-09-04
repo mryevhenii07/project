@@ -1,8 +1,6 @@
-import { lazy, Suspense } from "react";
+import React, { lazy, Suspense, createContext, useState } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ClipLoader } from "react-spinners";
-
-import React from "react";
 
 import AppBar from "./components/appBar/AppBar";
 import Main from "./components/main/Main";
@@ -16,37 +14,42 @@ const SuccessfullyRegist = lazy(() =>
 );
 const Users = lazy(() => import("./pages/users/Users"));
 
+export const IsNav = createContext("");
+
 function App() {
+  const [isNav, setIsNav] = useState(true);
   return (
     <div>
-      <AppBar />
-      <Suspense
-        fallback={
-          <div className={s.wrapSpinner}>
-            <ClipLoader color="#00BDD3" size={48} />
-          </div>
-        }
-      >
-        <Switch>
-          <Route exact path="/">
-            <Main />
-          </Route>
-          <Route path="/login">
-            <Form />
-          </Route>
-          <Route path="/users">
-            <Users />
-          </Route>
+      <IsNav.Provider value={{ isNav, setIsNav }}>
+        <AppBar />
+        <Suspense
+          fallback={
+            <div className={s.wrapSpinner}>
+              <ClipLoader color="#00BDD3" size={48} />
+            </div>
+          }
+        >
+          <Switch>
+            <Route exact path="/">
+              <Main />
+            </Route>
+            <Route path="/login">
+              <Form />
+            </Route>
+            <Route path="/users">
+              <Users />
+            </Route>
 
-          <Route path="/success">
-            <SuccessfullyRegist />
-          </Route>
-          <Route path="*">
-            <Main />
-          </Route>
-        </Switch>
-      </Suspense>
-      <Footer />
+            <Route path="/success">
+              <SuccessfullyRegist />
+            </Route>
+            <Route path="*">
+              <Main />
+            </Route>
+          </Switch>
+        </Suspense>
+        <Footer />
+      </IsNav.Provider>
     </div>
   );
 }

@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import s from "./Navigation.module.scss";
+import { IsNav } from "../../App";
 const Navigation = () => {
-  const [isCreate, setIsCreatr] = useState(false);
+  const { isNav } = useContext(IsNav);
   return (
     <>
-      {isCreate ? (
+      {isNav ? (
         <ul className={s.list}>
           <li>Website Style Guide</li>
         </ul>
