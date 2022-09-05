@@ -30,7 +30,7 @@ function App() {
           }
         >
           <Switch>
-            <Route exact path="/">
+            <Route exact path="/project">
               <Main />
             </Route>
             <Route path="/login">

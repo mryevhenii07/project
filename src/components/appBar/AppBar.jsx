@@ -8,7 +8,7 @@ const AppBar = () => {
   return (
     <header className={s.header}>
       <div className={s.wrapHeader}>
-        <Link to="/">
+        <Link to="/project">
           <img src={Logo} alt="/" />
         </Link>
 
